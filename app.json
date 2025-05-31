@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "frontend_pjbl2025-v2",
-    "slug": "frontend_pjbl2025-v2",
+    "name": "Snapan-Ecommerce",
+    "slug": "Snapan-Ecommerce",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/logoIcon.png",
     "scheme": "frontendpjbl2025v2",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -13,7 +13,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/logoIcon.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true
@@ -21,14 +21,14 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/logoIcon.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/images/splash.mp4",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
