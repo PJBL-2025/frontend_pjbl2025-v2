@@ -1,5 +1,15 @@
 import { images } from "./images";
 
+export interface Products {
+  id: number;
+  name: string;
+  image: string;
+  sold:number;
+  price: number;
+  star:number;
+  product_category: string[];
+}
+
 export const categoryIcon = [
   { icon: images.clothes1, name: "Sweater" },
   { icon: images.clothes2, name: "Jacket" },

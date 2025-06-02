@@ -32,9 +32,9 @@ interface Product {
   id: number;
   name: string;
   price: number;
-  product_images: string;
   star: number;
   sold: number;
+  image: string;
   product_category: string[];
 }
 
