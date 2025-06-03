@@ -47,7 +47,7 @@ export default function Index() {
                 <Bell color="white" />
               </TouchableOpacity>
 
-              <TouchableOpacity>
+              <TouchableOpacity>  
                 <ShoppingCart color="white" />
               </TouchableOpacity>
 

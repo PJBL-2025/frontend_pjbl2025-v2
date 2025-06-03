@@ -3,8 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, FlatList } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Search, X } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
-const STORAGE_KEY = 'SEARCH_HISTORY';
+import { STORAGE_KEY } from '@/constant/env';
 
 const search = () => {
   const [query, setQuery] = useState<string>('');
@@ -42,13 +41,13 @@ const search = () => {
       saveHistory(updatedHistory);
     }
 
+    setQuery('')
+
     console.log('Searching for:', query);
   };
 
   const handleSelectHistory = (item: string) => {
     setQuery(item);
-    // Optionally auto-search:
-    // handleSearch();
   };
 
   const handleDeleteHistoryItem = (itemToDelete: string) => {
@@ -66,6 +65,8 @@ const search = () => {
           maxLength={40}
           value={query}
           onChangeText={setQuery}
+          onSubmitEditing={() => handleSearch()}
+          returnKeyType='search'
         />
         <TouchableOpacity onPress={handleSearch}>
           <Search color="white" />
@@ -73,20 +74,21 @@ const search = () => {
       </View>
 
       {history.length > 0 && (
-        <View className="bg-white rounded-lg p-4">
+        <View className="">
           <FlatList
             data={history}
             keyExtractor={(item, index) => `${item}-${index}`}
             renderItem={({ item }) => (
-              <View className="flex-row justify-between items-center mb-2">
+              <View className="bg-white rounded-lg p-4 flex-row justify-between items-center">
                 <TouchableOpacity onPress={() => handleSelectHistory(item)}>
-                  <Text className="text-blue-600">{item}</Text>
+                  <Text >{item}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => handleDeleteHistoryItem(item)}>
                   <X color="red" size={18} />
                 </TouchableOpacity>
               </View>
             )}
+              ItemSeparatorComponent={() => <View className="h-2" />}
           />
         </View>
       )}
