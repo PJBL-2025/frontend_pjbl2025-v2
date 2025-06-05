@@ -1,13 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, FlatList } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Search, X } from 'lucide-react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { STORAGE_KEY } from '@/constant/env';
+import PageWrapper from "@/components/pageWrapper";
+import { STORAGE_KEY } from "@/constant/env";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useRouter } from "expo-router";
+import { Search, X } from "lucide-react-native";
+import React, { useEffect, useState } from "react";
+import {
+  FlatList,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 const search = () => {
-  const [query, setQuery] = useState<string>('');
+  const [query, setQuery] = useState<string>("");
   const [history, setHistory] = useState<string[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     const loadHistory = async () => {
@@ -17,7 +25,7 @@ const search = () => {
           setHistory(JSON.parse(storedHistory));
         }
       } catch (e) {
-        console.error('Failed to load history:', e);
+        console.error("Failed to load history:", e);
       }
     };
 
@@ -28,12 +36,12 @@ const search = () => {
     try {
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(newHistory));
     } catch (e) {
-      console.error('Failed to save history:', e);
+      console.error("Failed to save history:", e);
     }
   };
 
   const handleSearch = () => {
-    if (query.trim() === '') return;
+    if (query.trim() === "") return;
 
     if (!history.includes(query)) {
       const updatedHistory = [query, ...history];
@@ -41,9 +49,10 @@ const search = () => {
       saveHistory(updatedHistory);
     }
 
-    setQuery('')
+    setQuery("");
+    router.push("/product");
 
-    console.log('Searching for:', query);
+    console.log("Searching for:", query);
   };
 
   const handleSelectHistory = (item: string) => {
@@ -51,13 +60,13 @@ const search = () => {
   };
 
   const handleDeleteHistoryItem = (itemToDelete: string) => {
-    const updatedHistory = history.filter(item => item !== itemToDelete);
+    const updatedHistory = history.filter((item) => item !== itemToDelete);
     setHistory(updatedHistory);
     saveHistory(updatedHistory);
   };
 
   return (
-    <SafeAreaView className="flex-1 px-4 bg-blue-500">
+    <PageWrapper className="px-4">
       <View className="flex-row items-center gap-x-3 my-5">
         <TextInput
           className="flex-1 border border-white bg-white rounded-xl p-4"
@@ -66,7 +75,8 @@ const search = () => {
           value={query}
           onChangeText={setQuery}
           onSubmitEditing={() => handleSearch()}
-          returnKeyType='search'
+          returnKeyType="search"
+          autoFocus
         />
         <TouchableOpacity onPress={handleSearch}>
           <Search color="white" />
@@ -79,20 +89,23 @@ const search = () => {
             data={history}
             keyExtractor={(item, index) => `${item}-${index}`}
             renderItem={({ item }) => (
-              <View className="bg-white rounded-lg p-4 flex-row justify-between items-center">
+              <TouchableOpacity
+                className="bg-white rounded-lg p-4 flex-row justify-between items-center"
+                onPress={() => router.push("/product")}
+              >
                 <TouchableOpacity onPress={() => handleSelectHistory(item)}>
-                  <Text >{item}</Text>
+                  <Text>{item}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => handleDeleteHistoryItem(item)}>
                   <X color="red" size={18} />
                 </TouchableOpacity>
-              </View>
+              </TouchableOpacity>
             )}
-              ItemSeparatorComponent={() => <View className="h-2" />}
+            ItemSeparatorComponent={() => <View className="h-2" />}
           />
         </View>
       )}
-    </SafeAreaView>
+    </PageWrapper>
   );
 };
 

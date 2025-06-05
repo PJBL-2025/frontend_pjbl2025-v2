@@ -1,12 +1,11 @@
-import { Stack } from "expo-router";
+import { Slot, Stack } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
 import "./global.css";
 
 export default function RootLayout() {
   return (
-    <Stack>
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-
-      <Stack.Screen name="movie/[id]" options={{ headerShown: false }} />
-    </Stack>
+    <SafeAreaView className="flex-1 bg-blue-500">
+      <Slot />
+    </SafeAreaView>
   );
 }

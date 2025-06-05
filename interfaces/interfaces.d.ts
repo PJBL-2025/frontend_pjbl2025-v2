@@ -34,7 +34,7 @@ interface Product {
   price: number;
   star: number;
   sold: number;
-  image: string;
+  product_images: string;
   product_category: string[];
 }
 
