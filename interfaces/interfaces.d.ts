@@ -1,10 +1,10 @@
 enum Size {
-  XXL,
-  XL,
-  L,
-  M,
-  S,
-  XS,
+  'XXL',
+  'XL',
+  'L',
+  'M',
+  'S',
+  'XS',
 }
 
 enum StatusCheckout {
@@ -41,17 +41,19 @@ interface Product {
 interface Review {
   star: number;
   comment: string;
-  user_id: number;
-  created_at: Date;
+  user: {
+    username: string;
+    name: string;
+  };
+  created_at: string;
 }
 
 interface ProductDetail extends Product {
   description: string;
   quantity: number;
   weight: number;
-  created_at: Date;
-  product_images: string[];
-  product_size: Size[];
+  created_at: string;
+  product_size: string[];
   review: Review[];
 }
 
@@ -64,27 +66,27 @@ interface Banner {
 
 interface Checkout {
   status: StatusCheckout;
-  image: string
-  name: string
-  price: number
-  amount: number
-  address: Address
-  created_at: Date
+  image: string;
+  name: string;
+  price: number;
+  amount: number;
+  address: Address;
+  created_at: string;
 }
 
 interface OrderCustom {
-  front_image_path: string
-  back_image_path: string
-  front_width: number
-  back_width: number
+  front_image_path: string;
+  back_image_path: string;
+  front_width: number;
+  back_width: number;
 }
 
 interface Order {
-  quantity: number
-  size: Size
-  color: string
-  type: ['reguler', 'custom'],
-  price: number
-  product_id: number
+  quantity: number;
+  size: Size;
+  color: string;
+  type: ["reguler", "custom"];
+  price: number;
+  product_id: number;
 }
 

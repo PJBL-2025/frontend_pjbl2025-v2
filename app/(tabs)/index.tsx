@@ -1,7 +1,7 @@
-import CategoryButton from "@/components/category-button";
 import Footer from "@/components/footer";
 import PageWrapper from "@/components/pageWrapper";
-import ProductCard from "@/components/product-card";
+import CategoryButton from "@/components/ui/category-button";
+import ProductCard from "@/components/ui/product-card";
 import { categoryIcon, products } from "@/constant/dummy-data";
 import { images } from "@/constant/images";
 import { getGreeting } from "@/utils/formatter";
@@ -130,10 +130,7 @@ export default function Index() {
 
           <View className="flex-row flex-wrap justify-between">
             {products.map((item) => (
-              <ProductCard
-                key={item.id}
-                data={item}
-              />
+              <ProductCard key={item.id} data={item} />
             ))}
           </View>
         </View>

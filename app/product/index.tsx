@@ -1,5 +1,5 @@
 import NotFound from "@/components/not-found";
-import ProductCard from "@/components/product-card";
+import ProductCard from "@/components/ui/product-card";
 import { products } from "@/constant/dummy-data";
 import { useRouter } from "expo-router";
 import { ArrowLeft, Search, ShoppingCart } from "lucide-react-native";
@@ -33,10 +33,10 @@ const Product = () => {
           <ShoppingCart color="white" />
         </TouchableOpacity>
       </View>
-      
+
       <NotFound />
 
-      <ScrollView className=" bg-white rounded-t-2xl p-4 gap-8">
+      <ScrollView className="bg-white rounded-t-2xl p-4 gap-8">
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -55,7 +55,7 @@ const Product = () => {
           renderItem={({ item }) => <ProductCard data={item} />}
           numColumns={2}
           columnWrapperStyle={{
-            gap: 16,
+            gap: 20,
           }}
           scrollEnabled={false}
         />
