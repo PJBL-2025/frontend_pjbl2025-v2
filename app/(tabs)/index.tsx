@@ -1,3 +1,4 @@
+import CartIcon from "@/components/cart-icon";
 import Footer from "@/components/footer";
 import PageWrapper from "@/components/pageWrapper";
 import CategoryButton from "@/components/ui/category-button";
@@ -7,15 +8,14 @@ import { images } from "@/constant/images";
 import { getGreeting } from "@/utils/formatter";
 import { useRouter } from "expo-router";
 import {
-  Bell,
   MessageCircle,
   MoveRight,
   Search,
-  ShoppingCart,
 } from "lucide-react-native";
 import { useRef } from "react";
 import {
   Animated,
+  FlatList,
   Image,
   Pressable,
   ScrollView,
@@ -41,13 +41,7 @@ export default function Index() {
               <MessageCircle color="white" />
             </TouchableOpacity>
 
-            <TouchableOpacity>
-              <Bell color="white" />
-            </TouchableOpacity>
-
-            <TouchableOpacity>
-              <ShoppingCart color="white" />
-            </TouchableOpacity>
+            <CartIcon/>
 
             <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
               <TouchableOpacity className="bg-white border border-[#007AFF] rounded-2xl px-4 py-2 items-center shadow-md">
@@ -128,11 +122,16 @@ export default function Index() {
             </TouchableOpacity>
           </View>
 
-          <View className="flex-row flex-wrap justify-between">
-            {products.map((item) => (
-              <ProductCard key={item.id} data={item} />
-            ))}
-          </View>
+          <FlatList
+            data={products}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => <ProductCard data={item} />}
+            numColumns={2}
+            columnWrapperStyle={{
+              gap: 6,
+            }}
+            scrollEnabled={false}
+          />
         </View>
         <Footer />
       </ScrollView>

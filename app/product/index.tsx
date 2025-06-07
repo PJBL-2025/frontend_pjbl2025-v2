@@ -1,8 +1,9 @@
+import CartIcon from "@/components/cart-icon";
 import NotFound from "@/components/not-found";
 import ProductCard from "@/components/ui/product-card";
 import { products } from "@/constant/dummy-data";
 import { useRouter } from "expo-router";
-import { ArrowLeft, Search, ShoppingCart } from "lucide-react-native";
+import { ArrowLeft, Search } from "lucide-react-native";
 import React from "react";
 import {
   FlatList,
@@ -29,9 +30,7 @@ const Product = () => {
           <Search />
           <Text className="text-gray-500">Cari Sesuatu</Text>
         </Pressable>
-        <TouchableOpacity>
-          <ShoppingCart color="white" />
-        </TouchableOpacity>
+        <CartIcon/>
       </View>
 
       <NotFound />
@@ -55,7 +54,7 @@ const Product = () => {
           renderItem={({ item }) => <ProductCard data={item} />}
           numColumns={2}
           columnWrapperStyle={{
-            gap: 20,
+            gap: 6,
           }}
           scrollEnabled={false}
         />

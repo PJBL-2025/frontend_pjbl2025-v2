@@ -8,7 +8,7 @@ export default function ProductCard({ data }: { data: Product }) {
 
   return (
     <TouchableOpacity
-      className="bg-white rounded-2xl p-3 gap-3 border border-gray-300 mb-2"
+      className="bg-white rounded-xl p-3 gap-3 border border-gray-300 mb-[6px]"
       onPress={() => router.push(`/product/${data.id}`)}
     >
       <View className="size-40 rounded-xl flex justify-center ">

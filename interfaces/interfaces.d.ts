@@ -1,18 +1,4 @@
-enum Size {
-  'XXL',
-  'XL',
-  'L',
-  'M',
-  'S',
-  'XS',
-}
-
-enum StatusCheckout {
-  pending,
-  processing,
-  success,
-  failed,
-}
+import { Size, StatusCheckout } from "@/constant/enum";
 
 interface Address {
   id: number;
@@ -83,10 +69,17 @@ interface OrderCustom {
 
 interface Order {
   quantity: number;
-  size: Size;
+  size: Size | null;
   color: string;
-  type: ["reguler", "custom"];
+  type: "reguler" | "custom";
   price: number;
   product_id: number;
 }
 
+interface ProductCart extends Order {
+  id: number,
+  name: string;
+  product_images: string;
+  product_size: string[]
+  product_quantity: number
+}
