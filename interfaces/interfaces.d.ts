@@ -36,7 +36,7 @@ interface Review {
 
 interface ProductDetail extends Product {
   description: string;
-  quantity: number;
+  product_quantity: number;
   weight: number;
   created_at: string;
   product_size: string[];
@@ -68,12 +68,12 @@ interface OrderCustom {
 }
 
 interface Order {
-  quantity: number;
-  size: Size | null;
-  color: string;
-  type: "reguler" | "custom";
+  quantity?: number;
+  size?: Size | null;
+  color?: string;
+  type?: "reguler" | "custom";
   price: number;
-  product_id: number;
+  product_id?: number;
 }
 
 interface ProductCart extends Order {

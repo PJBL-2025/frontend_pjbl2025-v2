@@ -1,5 +1,4 @@
-import ModalCart from "@/components/modal-cart";
-import ProductPreview from "@/components/ui/cart-card";
+import CartCard from "@/components/ui/cart-card";
 import { useCartStore } from "@/store/cartStore";
 import { formatPrice } from "@/utils/formatter";
 import { useRouter } from "expo-router";
@@ -31,7 +30,7 @@ const CartPage = () => {
   const calculateTotal = () => {
     return cart
       .filter((item) => selectedItems.includes(item.id))
-      .reduce((total, item) => total + item.price * item.quantity, 0);
+      .reduce((total, item) => total + item.price * item.product_quantity, 0);
   };
 
   return (
@@ -71,10 +70,9 @@ const CartPage = () => {
                       )}
                     </TouchableOpacity>
                     <View className="flex-1">
-                      <ProductPreview item={item} />
+                      <CartCard item={item} />
                     </View>
                   </View>
-                  <ModalCart product={item}/>
                 </View>
               )}
             />

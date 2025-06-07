@@ -1,25 +1,20 @@
 import { Size } from "@/constant/enum";
 import { ProductCart } from "@/interfaces/interfaces";
 import { useCartStore } from "@/store/cartStore";
-import { useModalStore } from "@/store/modalStroe";
 import { formatPrice } from "@/utils/formatter";
 import { Pen, X } from "lucide-react-native";
 import { useState } from "react";
 import { Image, Modal, Text, TouchableOpacity, View } from "react-native";
+import ModalCart from "../modal-cart";
 
-const ProductPreview = ({ item }: { item: ProductCart }) => {
+const CartCard = ({ item }: { item: ProductCart }) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const removCart = useCartStore((state) => state.removeCart);
+  const [modalCart, setModalCart] = useState<boolean>(false);
 
-  const toggleModal = useModalStore((state) => state.toggleModal)
+  const removCart = useCartStore((state) => state.removeCart);
 
   const handleCancel = () => {
     setModalVisible(true);
-  };
-
-  const handleConfirm = () => {
-    removCart(item.id);
-    setModalVisible(false);
   };
 
   return (
@@ -27,14 +22,14 @@ const ProductPreview = ({ item }: { item: ProductCart }) => {
       <Image src={item.product_images} className="w-20 h-20 rounded-lg" />
       <View className="flex-1">
         <Text className="font-bold">{item.name}</Text>
-          <Text className="text-gray-500">
-            {item.color}, {Size[item.size || 0]}, {item.quantity} pcs
-          </Text>
+        <Text className="text-gray-500">
+          {item.color}, {Size[item.size || 0]}, {item.quantity} pcs
+        </Text>
         <Text className="font-semibold">{formatPrice(item.price)}</Text>
       </View>
 
-      <TouchableOpacity onPress={toggleModal}>
-        <Pen size={20} color="#3b82f6"/>
+      <TouchableOpacity onPress={() => setModalCart(true)}>
+        <Pen size={20} color="#3b82f6" />
       </TouchableOpacity>
 
       <TouchableOpacity onPress={handleCancel} className="p-2">
@@ -50,27 +45,37 @@ const ProductPreview = ({ item }: { item: ProductCart }) => {
         <View className="flex-1 justify-center items-center bg-black/50">
           <View className="bg-white w-80 p-5 rounded-xl">
             <Text className="text-lg font-bold mb-4 text-center">
-              You sure want to remove this item from your cart?
-            </Text>
+              Kalian yakin untuk menghapus item ini di keranjang?
+            </Text> 
             <View className="flex-row justify-center gap-x-5">
               <TouchableOpacity
                 onPress={() => setModalVisible(false)}
                 className="bg-gray-300 px-4 py-2 rounded-lg"
               >
-                <Text className="text-black font-semibold">No</Text>
+                <Text className="text-black font-semibold">Tidak</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={handleConfirm}
+                onPress={() => {
+                  removCart(item.id);
+                  setModalVisible(false);
+                }}
                 className="bg-red-500 px-4 py-2 rounded-lg"
               >
-                <Text className="text-white font-semibold">Yes</Text>
+                <Text className="text-white font-semibold">Iya</Text>
               </TouchableOpacity>
             </View>
           </View>
         </View>
       </Modal>
+
+      <ModalCart
+        product={item}
+        modalCart={modalCart}
+        setModalCart={setModalCart}
+        isUpdate={true}
+      />
     </View>
   );
 };
 
-export default ProductPreview;
+export default CartCard;

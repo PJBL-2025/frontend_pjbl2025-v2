@@ -1,7 +1,6 @@
 import { Size } from "@/constant/enum";
 import { ProductCart } from "@/interfaces/interfaces";
 import { useCartStore } from "@/store/cartStore";
-import { useModalStore } from "@/store/modalStroe";
 import { formatPrice } from "@/utils/formatter";
 import { X } from "lucide-react-native";
 import React, { useState } from "react";
@@ -23,16 +22,23 @@ type ModalTypeProps = {
   quantity: number;
 };
 
-const ModalCart = ({ product }: { product: ModalTypeProps }) => {
-  const [query, setQuery] = useState<string>("");
-  const [size, setSize] = useState<Size | null>(null);
-  const [quantity, setQuantity] = useState<number>(0);
+const ModalCart = ({
+  product,
+  modalCart,
+  setModalCart,
+  isUpdate = false
+}: {
+  product: ProductCart;
+  modalCart: boolean;
+  setModalCart: React.Dispatch<React.SetStateAction<boolean>>;
+  isUpdate?: boolean
+}) => {
+  const [query, setQuery] = useState<string>(product.color || "");
+  const [size, setSize] = useState<Size | null>(product.size || null);
+  const [quantity, setQuantity] = useState<number>(product.quantity || 0);
 
   const addToCart = useCartStore((state) => state.addToCart);
-  const modalCart = useModalStore((state) => state.modal);
-  const toggleModal = useModalStore((state) => state.toggleModal);
-
-  console.log(modalCart)
+  const updateCart = useCartStore((state) => state.updateCart);
 
   const handleQuantityChange = (value: string) => {
     const numValue = parseInt(value.replace(/[^0-9]/g, ""));
@@ -55,7 +61,7 @@ const ModalCart = ({ product }: { product: ModalTypeProps }) => {
     name: product.name,
     product_images: product.product_images,
     product_size: product.product_size,
-    product_quantity: product.quantity,
+    product_quantity: product.product_quantity,
     price: product.price,
     quantity: quantity,
     size: size,
@@ -63,18 +69,19 @@ const ModalCart = ({ product }: { product: ModalTypeProps }) => {
     type: "reguler",
   };
 
+
   return (
     <Modal
       visible={modalCart}
       transparent
       animationType="slide"
-      onRequestClose={toggleModal}
+      onRequestClose={() => setModalCart(false)}
     >
       <View className="flex-1 justify-end bg-black/40">
         <View className="rounded-t-2xl bg-white p-6 gap-4">
           <View className="mb-4 flex-row items-center justify-between">
             <Text className="text-xl font-bold">Shopping Cart</Text>
-            <TouchableOpacity onPress={toggleModal}>
+            <TouchableOpacity onPress={() => setModalCart(false)}>
               <X size={24} color="#000" />
             </TouchableOpacity>
           </View>
@@ -86,11 +93,14 @@ const ModalCart = ({ product }: { product: ModalTypeProps }) => {
                 className="w-full h-full object-cover"
               />
             </View>
-            <View className="gap-2">
-              <Text className="text-2xl font-bold">
+            <View className="gap-2 flex-1">
+              <Text className="text-xl font-bold">{product.name}</Text>
+              <Text className="text-lg font-semibold">
                 {formatPrice(product.price)}
               </Text>
-              <Text className="text-gray-400">Stok: {product.quantity}</Text>
+              <Text className="text-gray-500">
+                stok: {product.product_quantity}
+              </Text>
             </View>
           </View>
 
@@ -153,8 +163,8 @@ const ModalCart = ({ product }: { product: ModalTypeProps }) => {
                 : "bg-blue-500"
             }`}
             onPress={() => {
-              addToCart(cartHandle);
-              toggleModal();
+              {isUpdate ? updateCart(product.id ,cartHandle): addToCart(cartHandle)}
+              setModalCart(false);
               setSize(null);
               setQuery("");
               setQuantity(0);
@@ -162,7 +172,7 @@ const ModalCart = ({ product }: { product: ModalTypeProps }) => {
             disabled={quantity <= 0 || size === undefined}
           >
             <Text className="text-white font-bold checkout text-center">
-              Masukkan keranjang
+              {isUpdate  ? "Perbarui keranjang" : "Masukkan keranjang"}
             </Text>
           </TouchableOpacity>
         </View>

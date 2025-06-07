@@ -131,7 +131,7 @@ export const mockProduct: ProductDetail = {
   description:
     "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Praesentium maiores sunt est error nisi eum architecto quisquam earum amet recusandae perspiciatis, suscipit cumque, facere quas aliquid necessitatibus ex iure iusto!",
   product_images: "https://loremflickr.com/1671/3101?lock=769877223393981",
-  quantity: 900,
+  product_quantity: 900,
   price: 150000,
   weight: 10,
   star: 4.7,
@@ -142,35 +142,3 @@ export const mockProduct: ProductDetail = {
   created_at: "2025-05-16T04:33:22.168Z",
 };
 
-export const mockCartItems: ProductCart[] = [
-  {
-    product_id: 1,
-    name: "Youth 7200",
-    image: "https://loremflickr.com/1671/3101?lock=769877223393981",
-    price: 30000,
-    color: "#ffff",
-    quantity: 3,
-    size: 2,
-    type: "reguler",
-  },
-  {
-    product_id: 2,
-    name: "Heavyweight Long Sleeve 7500",
-    image: "https://loremflickr.com/1671/3101?lock=769877223393981",
-    price: 30000,
-    color: "#ffff",
-    quantity: 3,
-    size: 1,
-    type: "reguler",
-  },
-  {
-    product_id: 5,
-    name: "High and dry",
-    image: "https://loremflickr.com/1671/3101?lock=769877223393981",
-    price: 30000,
-    color: "#ffff",
-    quantity: 3,
-    size: 1,
-    type: "reguler",
-  },
-];

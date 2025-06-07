@@ -2,12 +2,11 @@ import CartIcon from "@/components/cart-icon";
 import ModalCart from "@/components/modal-cart";
 import ReviewCard from "@/components/ui/review-card";
 import { mockProduct, mockReviews } from "@/constant/dummy-data";
-import { useModalStore } from "@/store/modalStroe";
 import { formatDate, formatPrice } from "@/utils/formatter";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useRouter } from "expo-router";
 import { ChevronLeft, Palette } from "lucide-react-native";
-import React from "react";
+import React, { useState } from "react";
 import {
   FlatList,
   Image,
@@ -18,10 +17,10 @@ import {
 } from "react-native";
 
 const ProductDetail = () => {
+  const [modalCart, setModalCart] = useState<boolean>(false);
+  const router = useRouter();
   const product = mockProduct;
   const reviewData = mockReviews;
-  const router = useRouter();
-  const toggleModal = useModalStore((state) => state.toggleModal)
 
   return (
     <>
@@ -79,13 +78,15 @@ const ProductDetail = () => {
       <View className="flex-row p-4 bg-white border-t border-gray-200 items-center gap-2">
         <TouchableOpacity
           className="flex-1 bg-gray-200 rounded-xl py-3"
-          onPress={toggleModal}
+          onPress={() => setModalCart(true)}
         >
           <Text className="text-center font-semibold">Add to Cart</Text>
         </TouchableOpacity>
+
         <TouchableOpacity className="flex-1 bg-blue-500 rounded-xl py-3">
           <Text className="text-center text-white font-semibold">Buy Now</Text>
         </TouchableOpacity>
+        
         <TouchableOpacity>
           <View className="size-10 justify-center items-center border-2 rounded-xl">
             <Palette />
@@ -93,7 +94,11 @@ const ProductDetail = () => {
         </TouchableOpacity>
       </View>
 
-      <ModalCart product={product} />
+      <ModalCart
+        product={product}
+        modalCart={modalCart}
+        setModalCart={setModalCart}
+      />
     </>
   );
 };
