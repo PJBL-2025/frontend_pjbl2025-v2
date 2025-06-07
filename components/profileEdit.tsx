@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, Modal, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -11,6 +11,7 @@ import { useRouter } from 'expo-router';
 export default function ProfileEdit() {
     const navigation = useNavigation();
     const [showPopup, setShowPopup] = useState(false);
+    const [successModal, setSuccessModal] = useState(false);
     const router = useRouter();
 
     const [image, setImage] = useState<string | null>(null);
@@ -106,9 +107,19 @@ export default function ProfileEdit() {
 
                         {/* Submit Button */}
                         <View className='flex flex-row items-center justify-center gap-x-5'>
-                            <TouchableOpacity className="bg-[#0ACF83] py-3 rounded-xl items-center mb-4 w-20">
+                            <TouchableOpacity
+                                onPress={() => {
+                                    setSuccessModal(true);
+                                    setTimeout(() => {
+                                        setSuccessModal(false);
+                                        navigation.goBack();
+                                    }, 1000);
+                                }}
+                                className="bg-[#0ACF83] py-3 rounded-xl items-center mb-4 w-20"
+                            >
                                 <Text className="text-white font-semibold text-[16px]">Simpan</Text>
                             </TouchableOpacity>
+
                             <TouchableOpacity
                                 onPress={() => setShowPopup(true)}
                                 className="bg-[#BF3131] py-3 rounded-xl items-center mb-4 w-20"
@@ -118,6 +129,56 @@ export default function ProfileEdit() {
                         </View>
                     </View>
                 </View>
+                
+                <Modal
+                    animationType="fade"
+                    transparent={true}
+                    visible={showPopup}
+                    onRequestClose={() => setShowPopup(false)}
+                >
+                    <View className="flex-1 items-center justify-center bg-black/40">
+                        <View className="bg-white rounded-2xl px-6 py-8 w-[80%] shadow-lg">
+                            <Text className="text-center text-lg font-bold mb-4 text-gray-800">
+                                Keluar tanpa menyimpan?
+                            </Text>
+                            <Text className="text-center text-gray-500 mb-6">
+                                Apakah anda yakin ingin keluar tanpa menyimpan perubahan?
+                            </Text>
+                            <View className="flex-row justify-evenly space-x-4">
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        setShowPopup(false);
+                                        navigation.goBack();
+                                    }}
+                                    className="bg-[#BF3131] px-6 py-3 rounded-md"
+                                >
+                                    <Text className="text-white font-semibold">Iya</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={() => setShowPopup(false)}
+                                    className="bg-gray-200 px-6 py-3 rounded-md"
+                                >
+                                    <Text className="text-gray-700 font-semibold">Tidak</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
+                <Modal
+                    animationType="fade"
+                    transparent={true}
+                    visible={successModal}
+                    onRequestClose={() => setSuccessModal(false)}
+                >
+                    <View className="flex-1 items-center justify-center bg-black/40">
+                        <View className="bg-white rounded-2xl px-6 py-8 w-[75%] shadow-lg">
+                            <Text className="text-center text-lg font-bold mb-2 text-[#0ACF83]">
+                                Berhasil Menyimpan
+                            </Text>
+                            <Text className="text-center text-gray-600">Perubahan profil telah disimpan</Text>
+                        </View>
+                    </View>
+                </Modal>
 
             </SafeAreaView>
         </LinearGradient>
