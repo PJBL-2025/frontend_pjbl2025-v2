@@ -4,7 +4,7 @@ import ProductCard from "@/components/product-card";
 import { categoryIcon, products } from "@/constant/dummy-data";
 import { images } from "@/constant/images";
 import { getGreeting } from "@/utils/formatter";
-import { useNavigation } from "@react-navigation/native";
+import { useRouter } from "expo-router";
 import {
   Bell,
   MessageCircle,
@@ -26,7 +26,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
-  const navigation = useNavigation();
+  const router = useRouter();
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
   return (
@@ -61,15 +61,14 @@ export default function Index() {
             </View>
           </View>
 
-          {/* Search Bar */}
-          <Pressable className="bg-white rounded-[10px] px-4 py-2 flex-row items-center">
+          <Pressable
+            onPress={() => router.push('/search')}
+            className="bg-white rounded-[10px] px-4 py-3 flex-row items-center gap-x-2"
+          >
             <Search />
-            <TextInput
-              placeholder="Search Something"
-              returnKeyType="search"
-              className="flex-1"
-            />
+            <Text className="text-gray-400">Cari produk, seller, atau kategori</Text>
           </Pressable>
+
         </View>
 
         <View className="">

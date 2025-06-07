@@ -50,14 +50,13 @@ export default function ProfileEdit() {
                         <ChevronLeft size={24} color="#FFFFFF" />
                     </TouchableOpacity>
                     <Text className="flex-1 text-center text-white font-semibold text-base">
-                        Edit Profile
+                        Edit Profil
                     </Text>
                     <View className="w-5" />
                 </View>
 
                 <View className='flex items-center justify-center align-middle'>
                     <View className="relative items-center justify-center">
-                    {/* onPress={pickImage} */}
                         <View style={{
                                 shadowColor: '#ffffff',
                                 shadowOffset: { width: 0, height: 8 },
@@ -69,26 +68,22 @@ export default function ProfileEdit() {
                                 justifyContent: 'center',
                             }}>
                             <Image
-                                source={image ? { uri: image } : require('assets/images/Profile/profile-dummy.png')}
+                                source={image ? { uri: image } : require('@/assets/images/profile-dummy.png')}
                                 className="w-[120px] h-[120px] rounded-full mb-2"
                             />
                         </View>
-                        {/* <View className="absolute -translate-x-1/2 -translate-y-1/2">
-                            <Pencil size={28} color="#FFFFFF" />
-                        </View> */}
                     </View>
-                    <Text className='text-white font-bold'>Change Profile Picture</Text>
                 </View>
                 {/* Form */}
                 <View className="mt-6 justify-center">
                     <View className="bg-white p-6 rounded-3xl">
 
                         <Text className="text-gray-500 mb-4">
-                            Profile Information
+                            Informasi Profil
                         </Text>
 
                         {/* Username */}
-                        <Text className="font-bold mb-1">Name</Text>
+                        <Text className="font-bold mb-1">Nama</Text>
                         <TextInput
                             placeholder="Name Sebelumnya"
                             className="border border-gray-300 px-4 py-2 rounded-md mb-4"
@@ -106,25 +101,20 @@ export default function ProfileEdit() {
                             className="border border-gray-300 px-4 py-2 rounded-md mb-4"
                         />
                         <Text className="text-gray-400 ml-2 mt-1 mb-8">
-                            Don't forget to save before Exit
+                            Jangan lupa untuk SIMPAN sebelum keluar
                         </Text>
 
                         {/* Submit Button */}
                         <View className='flex flex-row items-center justify-center gap-x-5'>
                             <TouchableOpacity className="bg-[#0ACF83] py-3 rounded-xl items-center mb-4 w-20">
-                                <Text className="text-white font-semibold text-[16px]">Save</Text>
+                                <Text className="text-white font-semibold text-[16px]">Simpan</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
                                 onPress={() => setShowPopup(true)}
                                 className="bg-[#BF3131] py-3 rounded-xl items-center mb-4 w-20"
                             >
-                                <Text className="text-white font-semibold text-[16px]">Cancel</Text>
+                                <Text className="text-white font-semibold text-[16px]">Tutup</Text>
                             </TouchableOpacity>
-
-                            {/* <Popup visible={showPopup}
-                                onClose={() => setShowPopup(false)}
-                                onConfirm={() => {setShowPopup(false); navigation.navigate();}}
-                            /> */}
                         </View>
                     </View>
                 </View>
