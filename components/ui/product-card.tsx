@@ -1,3 +1,4 @@
+import { Product } from "@/interfaces/interfaces";
 import { formatPrice } from "@/utils/formatter";
 import { useRouter } from "expo-router";
 import { Star } from "lucide-react-native";

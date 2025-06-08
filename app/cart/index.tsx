@@ -3,7 +3,7 @@ import { useCartStore } from "@/store/cartStore";
 import { formatPrice } from "@/utils/formatter";
 import { useRouter } from "expo-router";
 import { ChevronLeft, ShoppingCart } from "lucide-react-native";
-import React, { useState } from "react";
+import React from "react";
 import {
   FlatList,
   ScrollView,
@@ -13,24 +13,17 @@ import {
 } from "react-native";
 
 const CartPage = () => {
-  const [selectedItems, setSelectedItems] = useState<number[]>([]);
   const cart = useCartStore((state) => state.cart);
   const router = useRouter();
 
-  const toggleItemSelection = (itemId: number) => {
-    setSelectedItems((prev) => {
-      if (prev.includes(itemId)) {
-        return prev.filter((id) => id !== itemId);
-      } else {
-        return [...prev, itemId];
-      }
-    });
-  };
+  const selectedCart = useCartStore((state) => state.selectedCart);
+  const orderCart = useCartStore((state) => state.orderCart);
 
   const calculateTotal = () => {
-    return cart
-      .filter((item) => selectedItems.includes(item.id))
-      .reduce((total, item) => total + item.price * item.product_quantity, 0);
+    return selectedCart.reduce(
+      (total, item) => total + item.price * item.product_quantity,
+      0
+    );
   };
 
   return (
@@ -59,19 +52,17 @@ const CartPage = () => {
               data={cart}
               keyExtractor={(item) => item.id.toString()}
               renderItem={({ item }) => (
-                <View>
-                  <View className="flex-row items-center">
-                    <TouchableOpacity
-                      className="w-6 h-6 border-2 border-blue-500 rounded mr-2 items-center justify-center"
-                      onPress={() => toggleItemSelection(item.id)}
-                    >
-                      {selectedItems.includes(item.id) && (
-                        <View className="w-4 h-4 bg-blue-500 rounded" />
-                      )}
-                    </TouchableOpacity>
-                    <View className="flex-1">
-                      <CartCard item={item} />
-                    </View>
+                <View className="flex-row items-center">
+                  <TouchableOpacity
+                    className="w-6 h-6 border-2 border-blue-500 rounded mr-2 items-center justify-center"
+                    onPress={() => orderCart(item)}
+                  >
+                    {selectedCart.includes(item) && (
+                      <View className="w-4 h-4 bg-blue-500 rounded" />
+                    )}
+                  </TouchableOpacity>
+                  <View className="flex-1">
+                    <CartCard item={item} />
                   </View>
                 </View>
               )}
@@ -79,7 +70,6 @@ const CartPage = () => {
           )}
         </View>
       </ScrollView>
-
       {cart.length > 0 && (
         <View className="bg-white p-4 border-t border-gray-200">
           <View className="flex-row justify-between mb-4">
@@ -88,19 +78,19 @@ const CartPage = () => {
               {formatPrice(calculateTotal())}
             </Text>
           </View>
-          {selectedItems.length > 0 ? (
-            <TouchableOpacity className="bg-blue-500 rounded-xl py-3">
+          {selectedCart.length > 0 ? (
+            <TouchableOpacity
+              className="bg-blue-500 rounded-xl py-3"
+              onPress={() => router.push("/cart/checkout")}
+            >
               <Text className="text-center text-white font-semibold">
-                Checkout ({selectedItems.length} items)
+                Pesanan ({selectedCart.length} item)
               </Text>
             </TouchableOpacity>
           ) : (
-            <TouchableOpacity
-              className="bg-gray-300 rounded-xl py-3"
-              disabled={true}
-            >
+            <TouchableOpacity className="bg-gray-300 rounded-xl py-3" disabled>
               <Text className="text-center text-gray-500 font-semibold">
-                Select items to checkout
+                Pilih item untuk dipesan
               </Text>
             </TouchableOpacity>
           )}

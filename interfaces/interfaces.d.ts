@@ -74,6 +74,13 @@ interface Order {
   type?: "reguler" | "custom";
   price: number;
   product_id?: number;
+  product_custom?: OrderCustom;
+}
+
+interface CheckoutProduct {
+  total_price: number
+  address_id: number
+  product_checkout: Order[]
 }
 
 interface ProductCart extends Order {

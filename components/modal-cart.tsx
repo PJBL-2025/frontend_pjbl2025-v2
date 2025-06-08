@@ -69,7 +69,6 @@ const ModalCart = ({
     type: "reguler",
   };
 
-
   return (
     <Modal
       visible={modalCart}

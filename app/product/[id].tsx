@@ -29,7 +29,7 @@ const ProductDetail = () => {
           <ChevronLeft size={24} color="#FFFFFF" />
         </TouchableOpacity>
         <Text className="flex-1 text-center text-white font-semibold text-base">
-          Detail Product
+          Detail Produk
         </Text>
         <CartIcon />
       </View>
@@ -61,7 +61,7 @@ const ProductDetail = () => {
         <View className="my-8">
           <Text className="text-2xl font-bold mb-2">Deskripsi</Text>
           <Text className="text-gray-500">{product.description}</Text>
-          <Text className="text-gray-500">Stok: {product.quantity} pcs</Text>
+          <Text className="text-gray-500">Stok: {product.product_quantity} pcs</Text>
           <Text className="text-gray-500">Berat: {product.weight} kg</Text>
         </View>
 
@@ -80,11 +80,11 @@ const ProductDetail = () => {
           className="flex-1 bg-gray-200 rounded-xl py-3"
           onPress={() => setModalCart(true)}
         >
-          <Text className="text-center font-semibold">Add to Cart</Text>
+          <Text className="text-center font-semibold">Tambah Keranjang</Text>
         </TouchableOpacity>
 
         <TouchableOpacity className="flex-1 bg-blue-500 rounded-xl py-3">
-          <Text className="text-center text-white font-semibold">Buy Now</Text>
+          <Text className="text-center text-white font-semibold">Beli Sekarang</Text>
         </TouchableOpacity>
         
         <TouchableOpacity>

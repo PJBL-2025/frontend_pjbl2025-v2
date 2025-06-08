@@ -1,4 +1,4 @@
-import { ProductCart, ProductDetail, Review } from "@/interfaces/interfaces";
+import { Address, ProductDetail, Review } from "@/interfaces/interfaces";
 import { images } from "./images";
 
 export const categoryIcon = [
@@ -142,3 +142,26 @@ export const mockProduct: ProductDetail = {
   created_at: "2025-05-16T04:33:22.168Z",
 };
 
+export const addressMockup: Address[] = [
+  {
+    id: 10,
+    address: "3857 Titus Field",
+    zip_code: 15555,
+    destination_code: "UZB",
+    receiver_area: "AUS-584",
+  },
+  {
+    id: 11,
+    address: "332 W Broadway Street",
+    zip_code: 97196,
+    destination_code: "USA",
+    receiver_area: "CZE-887",
+  },
+  {
+    id: 12,
+    address: "19684 Buckingham Road",
+    zip_code: 7415,
+    destination_code: "KGZ",
+    receiver_area: "PER-454",
+  },
+];
