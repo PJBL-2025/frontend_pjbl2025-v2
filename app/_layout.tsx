@@ -7,6 +7,8 @@ export default function RootLayout() {
       <Stack.Screen name="splash" options={{ headerShown: false }} />
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen name="profile/profileEditPage" options={{ headerShown: false }} />
+      <Stack.Screen name="design/design" options={{ headerShown: false }} />
+      <Stack.Screen name="category/[slug]" options={{ headerShown: false }} />
     </Stack>
   );
 }

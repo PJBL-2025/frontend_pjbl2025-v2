@@ -11,9 +11,11 @@ export interface Products {
 }
 
 export const categoryIcon = [
-  { icon: images.clothes1, name: "Sweater" },
-  { icon: images.clothes2, name: "Jacket" },
-  { icon: images.clothes3, name: "Hoodie" },
+  { icon: images.sweaterIcon, name: "Sweater" },
+  { icon: images.jaketIcon, name: "Jaket" },
+  { icon: images.kaosPanjangIcon, name: "Kaos Panjang" },
+  { icon: images.kaosPendekIcon, name: "Kaos Pendek" },
+  { icon: images.designIcon, name: "Design"}
 ];
 
 export const products = [
@@ -24,7 +26,7 @@ export const products = [
     product_images: "https://loremflickr.com/2898/3209?lock=8961959562327376",
     star: 2,
     sold: 1,
-    product_category: ["Practical", "Oriental", "Handmade", "Modern"],
+    product_category: ["Practical", "Oriental", "Handmade", "Modern", "Sweater"],
   },
   {
     id: 2,
@@ -33,7 +35,7 @@ export const products = [
     product_images: "https://loremflickr.com/1379/307?lock=7188539613782750",
     star: 3,
     sold: 1,
-    product_category: ["Unbranded", "Handmade", "Frozen"],
+    product_category: ["Unbranded", "Handmade", "Frozen", "Jaket", "Kaos Pendek"],
   },
   {
     id: 3,
@@ -42,6 +44,6 @@ export const products = [
     product_images: "https://picsum.photos/seed/LWmm27c6ec/1212/630",
     star: 0,
     sold: 3,
-    product_category: ["Refined", "Frozen", "Handmade"],
+    product_category: ["Refined", "Frozen", "Handmade", "Kaos Panjang"],
   },
 ];
