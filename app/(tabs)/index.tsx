@@ -1,22 +1,21 @@
 import CartIcon from "@/components/cart-icon";
 import Footer from "@/components/footer";
 import PageWrapper from "@/components/pageWrapper";
+import BannerCard from "@/components/ui/banner-card";
 import CategoryButton from "@/components/ui/category-button";
 import ProductCard from "@/components/ui/product-card";
-import { categoryIcon, products } from "@/constant/dummy-data";
-import { images } from "@/constant/images";
+import { categoryIcon } from "@/constant/dummy-data";
+import { API_URL } from "@/constant/env";
+import useFetch from "@/hooks/usefetch";
+import { Banner, Product } from "@/interfaces/interfaces";
+import { getAllProduct, getBanner } from "@/service/productService";
 import { getGreeting } from "@/utils/formatter";
 import { useRouter } from "expo-router";
-import {
-  MessageCircle,
-  MoveRight,
-  Search,
-} from "lucide-react-native";
+import { MessageCircle, Search } from "lucide-react-native";
 import { useRef } from "react";
 import {
   Animated,
   FlatList,
-  Image,
   Pressable,
   ScrollView,
   Text,
@@ -25,8 +24,20 @@ import {
 } from "react-native";
 
 export default function Index() {
-  const router = useRouter();
+  const {
+    data: productData,
+    error: productError,
+    loading: productLoading,
+  } = useFetch<Product[]>(getAllProduct);
+
+  const {
+    data: bannerData,
+    error: bannerRrror,
+    loading: bannerLoading,
+  } = useFetch<Banner[]>(getBanner);
+
   const scaleAnim = useRef(new Animated.Value(1)).current;
+  const router = useRouter();
 
   return (
     <PageWrapper>
@@ -41,10 +52,13 @@ export default function Index() {
               <MessageCircle color="white" />
             </TouchableOpacity>
 
-            <CartIcon/>
+            <CartIcon />
 
             <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
-              <TouchableOpacity className="bg-white border border-[#007AFF] rounded-2xl px-4 py-2 items-center shadow-md" onPress={() => router.push("/login")}>
+              <TouchableOpacity
+                className="bg-white border border-[#007AFF] rounded-2xl px-4 py-2 items-center shadow-md"
+                onPress={() => router.push("/login")}
+              >
                 <Text className="text-[#007AFF] font-semibold text-base">
                   Login
                 </Text>
@@ -71,28 +85,8 @@ export default function Index() {
             className="p-4"
           >
             <View className="flex-row gap-4 mr-8">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <View
-                  key={i}
-                  className="flex-row items-center gap-4 rounded-xl bg-white px-4 py-2"
-                >
-                  <View>
-                    <Text className="mb-2 text-base font-bold text-black">
-                      TMA-2{"\n"}Modular{"\n"}Headphone
-                    </Text>
-                    <TouchableOpacity>
-                      <View className="flex-row items-center">
-                        <Text className="mr-1 text-base font-medium text-blue-500">
-                          Shop now
-                        </Text>
-                        <MoveRight size={15} color="#3B82F6" />
-                      </View>
-                    </TouchableOpacity>
-                  </View>
-                  <View className="w-32 h-32">
-                    <Image source={images.clothes1} className="w-full h-full" />
-                  </View>
-                </View>
+              {bannerData?.map((item) => (
+                <BannerCard key={item.id} item={item} />
               ))}
             </View>
           </ScrollView>
@@ -123,12 +117,13 @@ export default function Index() {
           </View>
 
           <FlatList
-            data={products}
+            data={productData}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => <ProductCard data={item} />}
             numColumns={2}
             columnWrapperStyle={{
-              gap: 6,
+              justifyContent: "space-between",
+              paddingBottom: 12,
             }}
             scrollEnabled={false}
           />

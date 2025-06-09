@@ -1,10 +1,15 @@
 import CartIcon from "@/components/cart-icon";
 import ModalCart from "@/components/modal-cart";
+import NotFound from "@/components/not-found";
+import ProductCard from "@/components/ui/product-card";
 import ReviewCard from "@/components/ui/review-card";
-import { mockProduct, mockReviews } from "@/constant/dummy-data";
+import useFetch from "@/hooks/usefetch";
+import { Product, ProductDetail } from "@/interfaces/interfaces";
+import { getAllProduct, getOnePorduct } from "@/service/productService";
 import { formatDate, formatPrice } from "@/utils/formatter";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useRouter } from "expo-router";
+import { useLocalSearchParams } from "expo-router/build/hooks";
 import { ChevronLeft, Palette } from "lucide-react-native";
 import React, { useState } from "react";
 import {
@@ -16,11 +21,30 @@ import {
   View,
 } from "react-native";
 
-const ProductDetail = () => {
+const ProductDetailPage = () => {
+  const { id } = useLocalSearchParams();
+  const {
+    data: product,
+    error,
+    loading,
+  } = useFetch<ProductDetail>(() => getOnePorduct(Number(id)));
+
+  const {
+    data: productData,
+    error: productError,
+    loading: productLoading,
+  } = useFetch<Product[]>(getAllProduct);
+
   const [modalCart, setModalCart] = useState<boolean>(false);
   const router = useRouter();
-  const product = mockProduct;
-  const reviewData = mockReviews;
+
+  if (!product) {
+    return (
+      <View className="flex-1 justify-center items-center">
+        <NotFound />
+      </View>
+    );
+  }
 
   return (
     <>
@@ -38,7 +62,7 @@ const ProductDetail = () => {
         <View className="flex-row items-center gap-4">
           <View className="size-40">
             <Image
-              src={product.product_images}
+              src={product.product_images[0]}
               className="w-full h-full object-cover"
             />
           </View>
@@ -61,18 +85,48 @@ const ProductDetail = () => {
         <View className="my-8">
           <Text className="text-2xl font-bold mb-2">Deskripsi</Text>
           <Text className="text-gray-500">{product.description}</Text>
-          <Text className="text-gray-500">Stok: {product.product_quantity} pcs</Text>
+          <Text className="text-gray-500">
+            Stok: {product.product_quantity} pcs
+          </Text>
           <Text className="text-gray-500">Berat: {product.weight} kg</Text>
         </View>
 
-        <View className="mb-4">
+        <View className="mb-8">
           <Text className="text-2xl font-bold mb-2">Ulasan</Text>
+          {product.review.length < 0 ? (
+            <View className="">
+              <Text className="text-gray-500 text-center">
+                Belum ada ulasan
+              </Text>
+            </View>
+          ) : (
+            <FlatList
+              data={product.review}
+              keyExtractor={(item) => item.user.username}
+              renderItem={({ item }) => <ReviewCard data={item} />}
+            />
+          )}
+        </View>
+
+        <View className="py-4 border-t border-gray-300">
+          <Text className="text-2xl font-bold mb-2">Produk Lainnya</Text>
+
           <FlatList
-            data={reviewData}
-            keyExtractor={(item) => item.user.username}
-            renderItem={({ item }) => <ReviewCard data={item} />}
+            data={productData}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => <ProductCard data={item} />}
+            numColumns={2}
+            columnWrapperStyle={{
+              justifyContent: "space-between",
+              paddingBottom: 12,
+            }}
+            scrollEnabled={false}
           />
         </View>
+
+        <Text className="text-center font-bold text-blue-500 mb-12">
+          Sudah menunjukan semua produk.
+        </Text>
       </ScrollView>
 
       <View className="flex-row p-4 bg-white border-t border-gray-200 items-center gap-2">
@@ -84,9 +138,11 @@ const ProductDetail = () => {
         </TouchableOpacity>
 
         <TouchableOpacity className="flex-1 bg-blue-500 rounded-xl py-3">
-          <Text className="text-center text-white font-semibold">Beli Sekarang</Text>
+          <Text className="text-center text-white font-semibold">
+            Beli Sekarang
+          </Text>
         </TouchableOpacity>
-        
+
         <TouchableOpacity>
           <View className="size-10 justify-center items-center border-2 rounded-xl">
             <Palette />
@@ -103,4 +159,4 @@ const ProductDetail = () => {
   );
 };
 
-export default ProductDetail;
+export default ProductDetailPage;

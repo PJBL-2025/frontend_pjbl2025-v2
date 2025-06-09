@@ -1,7 +1,10 @@
 import CartIcon from "@/components/cart-icon";
+import NotFound from "@/components/not-found";
 import ProductCard from "@/components/ui/product-card";
-import { products } from "@/constant/dummy-data";
 import { images } from "@/constant/images";
+import useFetch from "@/hooks/usefetch";
+import { Product } from "@/interfaces/interfaces";
+import { getCategoryPorduct } from "@/service/productService";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import { ChevronLeft } from "lucide-react-native";
 import React from "react";
@@ -13,14 +16,15 @@ const capitalizeWords = (text: string) =>
 
 const CategoryPage = () => {
   const { slug } = useLocalSearchParams();
-  const navigation = useNavigation();
-  const formattedSlug = capitalizeWords(String(slug).replace(/-/g, " "));
+  const formattedSlug = capitalizeWords(String(slug).replace("%20", " "));
 
-  const filteredProducts = products.filter((item) =>
-    item.product_category
-      .map((c) => c.toLowerCase())
-      .includes(formattedSlug.toLowerCase())
-  );
+  const {
+    data: filteredProducts,
+    error,
+    loading,
+  } = useFetch<Product[]>(() => getCategoryPorduct(String(slug)));
+
+  const navigation = useNavigation();
 
   return (
     <SafeAreaView className="flex-1 bg-blue-500">
@@ -48,10 +52,8 @@ const CategoryPage = () => {
           </View>
         </View>
 
-        {filteredProducts.length === 0 ? (
-          <Text className="text-gray-600 text-base">
-            Produk tidak ditemukan.
-          </Text>
+        {filteredProducts?.length === 0 ? (
+          <NotFound />
         ) : (
           <FlatList
             data={filteredProducts}
