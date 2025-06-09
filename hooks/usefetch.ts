@@ -12,7 +12,7 @@ const useFetch = <T>(fetchFunc: () => Promise<T>, autofetch = true) => {
 
             const result = await fetchFunc()
             setData(result)
-        } catch (err) {
+        } catch (err) { 
             setError(
                 err instanceof Error ? err : new Error("Terdapat error yang tidak bisa terdeteksi")
             )

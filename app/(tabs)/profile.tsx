@@ -1,3 +1,4 @@
+import PageWrapper from "@/components/pageWrapper";
 import { images } from "@/constant/images";
 import { useRouter } from "expo-router";
 import {
@@ -7,14 +8,13 @@ import {
   Pencil,
 } from "lucide-react-native";
 import { Image, Linking, Text, TouchableOpacity, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Profile() {
   const router = useRouter();
   const NomorHP = "62895635004580";
 
   return (
-    <SafeAreaView className="flex-1 bg-blue-500">
+    <PageWrapper>
       <View>
         {/* Header */}
         <View className="flex-row items-center justify-between mt-2 mb-6 px-4">
@@ -72,25 +72,6 @@ export default function Profile() {
           </View>
         </View>
 
-        {/* <View className="bg-white px-4 pt-6 rounded-t-2xl">
-                        <Text className='font-bold mb-5'>
-                        Recomendation Products
-                        </Text>
-                        <View className="flex-row flex-wrap justify-between">
-                        {products.map((item) => (
-                          <ProductCard
-                            key={item.id}
-                            id={item.id}
-                            image={item.product_images}
-                            name={item.name}
-                            price={item.price}
-                            sold={item.sold}
-                            star={item.star}
-                            product_category={item.product_category}
-                          />
-                        ))}
-                        </View>
-                    </View> */}
         <View className="bg-white py-10 gap-y-3 p-2">
           <TouchableOpacity
             className="flex flex-row items-center gap-x-2"
@@ -105,6 +86,6 @@ export default function Profile() {
           </TouchableOpacity>
         </View>
       </View>
-    </SafeAreaView>
+    </PageWrapper>
   );
 }

@@ -1,82 +1,74 @@
-import CategoryButton from "@/components/category-button";
+import CartIcon from "@/components/cart-icon";
 import Footer from "@/components/footer";
-import ProductCard from "@/components/product-card";
+import PageWrapper from "@/components/pageWrapper";
+import CategoryButton from "@/components/ui/category-button";
+import ProductCard from "@/components/ui/product-card";
 import { categoryIcon, products } from "@/constant/dummy-data";
 import { images } from "@/constant/images";
 import { getGreeting } from "@/utils/formatter";
-import { useNavigation } from "@react-navigation/native";
+import { useRouter } from "expo-router";
 import {
-  Bell,
   MessageCircle,
   MoveRight,
   Search,
-  ShoppingCart,
 } from "lucide-react-native";
 import { useRef } from "react";
 import {
   Animated,
+  FlatList,
   Image,
   Pressable,
   ScrollView,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
-  const navigation = useNavigation();
+  const router = useRouter();
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
   return (
-    <SafeAreaView className="flex-1 bg-blue-500">
-      <ScrollView>
-        <View className="p-4">
-          <View className="flex-row justify-between items-center mb-4">
-            <Text className="text-base text-white font-semibold">
-              {getGreeting()}, User👋
-            </Text>
+    <PageWrapper>
+      <View className="sticky top-0 left-0 p-4">
+        <View className="flex-row justify-between items-center mb-4">
+          <Text className="text-base text-white font-semibold">
+            {getGreeting()}, User👋
+          </Text>
 
-            <View className="flex-row items-center gap-3">
-              <TouchableOpacity>
-                <MessageCircle color="white" />
+          <View className="flex-row items-center gap-3">
+            <TouchableOpacity>
+              <MessageCircle color="white" />
+            </TouchableOpacity>
+
+            <CartIcon/>
+
+            <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
+              <TouchableOpacity className="bg-white border border-[#007AFF] rounded-2xl px-4 py-2 items-center shadow-md">
+                <Text className="text-[#007AFF] font-semibold text-base">
+                  Login
+                </Text>
               </TouchableOpacity>
-
-              <TouchableOpacity>
-                <Bell color="white" />
-              </TouchableOpacity>
-
-              <TouchableOpacity>  
-                <ShoppingCart color="white" />
-              </TouchableOpacity>
-
-              <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
-                <TouchableOpacity className="bg-white border border-[#007AFF] rounded-2xl px-4 py-2 items-center shadow-md">
-                  <Text className="text-[#007AFF] font-semibold text-base">
-                    Login
-                  </Text>
-                </TouchableOpacity>
-              </Animated.View>
-            </View>
+            </Animated.View>
           </View>
-
-          {/* Search Bar */}
-          <Pressable className="bg-white rounded-[10px] px-4 py-2 flex-row items-center">
-            <Search />
-            <TextInput
-              placeholder="Search Something"
-              returnKeyType="search"
-              className="flex-1"
-            />
-          </Pressable>
         </View>
 
+        {/* Search Bar */}
+        <Pressable
+          className="bg-white rounded-xl p-4 flex-row items-center gap-4"
+          onPress={() => router.push("/search")}
+        >
+          <Search />
+          <Text className="text-gray-500">Cari Sesuatu</Text>
+        </Pressable>
+      </View>
+
+      <ScrollView>
         <View className="">
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
-            className="px-4 py-4"
+            className="p-4"
           >
             <View className="flex-row gap-4 mr-8">
               {Array.from({ length: 5 }).map((_, i) => (
@@ -130,23 +122,19 @@ export default function Index() {
             </TouchableOpacity>
           </View>
 
-          <View className="flex-row flex-wrap justify-between">
-            {products.map((item) => (
-              <ProductCard
-                key={item.id}
-                id={item.id}
-                image={item.product_images}
-                name={item.name}
-                price={item.price}
-                sold={item.sold}
-                star={item.star}
-                product_category={item.product_category}
-              />
-            ))}
-          </View>
+          <FlatList
+            data={products}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => <ProductCard data={item} />}
+            numColumns={2}
+            columnWrapperStyle={{
+              gap: 6,
+            }}
+            scrollEnabled={false}
+          />
         </View>
-        <Footer/>
+        <Footer />
       </ScrollView>
-    </SafeAreaView>
+    </PageWrapper>
   );
 }
