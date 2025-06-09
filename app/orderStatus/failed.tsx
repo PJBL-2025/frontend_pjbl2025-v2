@@ -10,7 +10,7 @@ export default function Failed() {
   };
 
   return (
-    <ScrollView className="p-4">
+    <ScrollView className="">
       {orders.map((order, index) => (
         <View
           key={index}

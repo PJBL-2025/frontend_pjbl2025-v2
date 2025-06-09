@@ -56,8 +56,8 @@ const renderContent = () => {
   return (
   <SafeAreaView className="flex-1 bg-blue-500">
     <View className="flex-1">
-      <View className="items-center mt-4 mb-2">
-        <View className="flex-row gap-x-6">
+      <View className="items-center mb-4">
+        <View className="flex-row gap-x-6 items-center">
           {TABS.map((tab) => (
             <TouchableOpacity
               key={tab.key}
@@ -81,7 +81,7 @@ const renderContent = () => {
       <ScrollView
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
-        className="bg-white rounded-t-2xl px-4 pt-4 pb-6"
+        className="bg-white rounded-t-2xl p-4 pb-6"
       >
         {renderContent()}
       </ScrollView>

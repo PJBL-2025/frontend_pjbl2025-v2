@@ -43,7 +43,7 @@ export default function Pending() {
 
   return (
     <View className="flex-1 bg-gradient-to-b from-blue-100 to-white">
-      <ScrollView className="p-4 space-y-4">
+      <ScrollView className="space-y-4">
         {groupedPending.map((group) => (
           <TouchableOpacity
             key={group.id}
