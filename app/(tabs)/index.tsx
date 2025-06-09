@@ -44,7 +44,7 @@ export default function Index() {
             <CartIcon/>
 
             <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
-              <TouchableOpacity className="bg-white border border-[#007AFF] rounded-2xl px-4 py-2 items-center shadow-md">
+              <TouchableOpacity className="bg-white border border-[#007AFF] rounded-2xl px-4 py-2 items-center shadow-md" onPress={() => router.push("/login")}>
                 <Text className="text-[#007AFF] font-semibold text-base">
                   Login
                 </Text>

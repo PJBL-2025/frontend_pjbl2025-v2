@@ -18,7 +18,7 @@ const ProfileEdit = () => {
 
   return (
     <>
-      <View className="flex-row items-center mt-2 mb-6">
+      <View className="flex-row items-center p-4 mb-6">
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <ChevronLeft size={24} color="#FFFFFF" />
         </TouchableOpacity>
@@ -54,7 +54,7 @@ const ProfileEdit = () => {
         </View>
       </View>
       {/* Form */}
-      <View className="mt-6 justify-center">
+      <View className="p-4 justify-center">
         <View className="bg-white p-6 rounded-3xl">
           <Text className="text-gray-500 mb-4">Informasi Profil</Text>
 
