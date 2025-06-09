@@ -41,7 +41,7 @@ export default function Profile() {
             </View>
           </View>
 
-          <TouchableOpacity className="" onPress={() => router.push('/profile/profileEditPage')}>
+          <TouchableOpacity className="" onPress={() => router.push('/profile/edit')}>
             <Pencil size={25} color="#000000" />
           </TouchableOpacity>
         </View>
