@@ -7,6 +7,11 @@ import sent from "@/assets/images/sent.png";
 import notpaid from "@/assets/images/not-yet-paid.png";
 import deliver from "@/assets/images/deliver-on-process.png";
 import profile from "@/assets/images/profile-dummy.png";
+import jaketIcon from "@/assets/images/categoryIcon/jacket.png";
+import sweaterIcon from "@/assets/images/categoryIcon/sweater.png";
+import kaosPendekIcon from "@/assets/images/categoryIcon/kaos-pendek.png";
+import kaosPanjangIcon from "@/assets/images/categoryIcon/kaos-panjang.png";
+import categoryHeader from "@/assets/images/CategoryHeader.png";
 
 export const images = {
     logoIcon,
@@ -17,5 +22,10 @@ export const images = {
     sent,
     notpaid,
     deliver,
-    profile
+    profile,
+    jaketIcon,
+    sweaterIcon,
+    kaosPendekIcon,
+    kaosPanjangIcon,
+    categoryHeader,
 }

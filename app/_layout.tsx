@@ -13,8 +13,9 @@ export default function RootLayout() {
         <Stack.Screen name="splash" />
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="product" />
-        <Stack.Screen name="cart/index" />
-        <Stack.Screen name="cart/checkout/index" />
+        <Stack.Screen name="cart" />
+        <Stack.Screen name="category/[slug]" />
+        <Stack.Screen name="profile/profileEditPage"/>
       </Stack>
 
   );

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, Modal, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -11,6 +11,7 @@ import { useRouter } from 'expo-router';
 export default function ProfileEdit() {
     const navigation = useNavigation();
     const [showPopup, setShowPopup] = useState(false);
+    const [successModal, setSuccessModal] = useState(false);
     const router = useRouter();
 
     const [image, setImage] = useState<string | null>(null);
@@ -50,14 +51,13 @@ export default function ProfileEdit() {
                         <ChevronLeft size={24} color="#FFFFFF" />
                     </TouchableOpacity>
                     <Text className="flex-1 text-center text-white font-semibold text-base">
-                        Edit Profile
+                        Edit Profil
                     </Text>
                     <View className="w-5" />
                 </View>
 
                 <View className='flex items-center justify-center align-middle'>
                     <View className="relative items-center justify-center">
-                    {/* onPress={pickImage} */}
                         <View style={{
                                 shadowColor: '#ffffff',
                                 shadowOffset: { width: 0, height: 8 },
@@ -69,26 +69,22 @@ export default function ProfileEdit() {
                                 justifyContent: 'center',
                             }}>
                             <Image
-                                source={image ? { uri: image } : require('assets/images/Profile/profile-dummy.png')}
+                                source={image ? { uri: image } : require('@/assets/images/profile-dummy.png')}
                                 className="w-[120px] h-[120px] rounded-full mb-2"
                             />
                         </View>
-                        {/* <View className="absolute -translate-x-1/2 -translate-y-1/2">
-                            <Pencil size={28} color="#FFFFFF" />
-                        </View> */}
                     </View>
-                    <Text className='text-white font-bold'>Change Profile Picture</Text>
                 </View>
                 {/* Form */}
                 <View className="mt-6 justify-center">
                     <View className="bg-white p-6 rounded-3xl">
 
                         <Text className="text-gray-500 mb-4">
-                            Profile Information
+                            Informasi Profil
                         </Text>
 
                         {/* Username */}
-                        <Text className="font-bold mb-1">Name</Text>
+                        <Text className="font-bold mb-1">Nama</Text>
                         <TextInput
                             placeholder="Name Sebelumnya"
                             className="border border-gray-300 px-4 py-2 rounded-md mb-4"
@@ -106,28 +102,83 @@ export default function ProfileEdit() {
                             className="border border-gray-300 px-4 py-2 rounded-md mb-4"
                         />
                         <Text className="text-gray-400 ml-2 mt-1 mb-8">
-                            Don't forget to save before Exit
+                            Jangan lupa untuk SIMPAN sebelum keluar
                         </Text>
 
                         {/* Submit Button */}
                         <View className='flex flex-row items-center justify-center gap-x-5'>
-                            <TouchableOpacity className="bg-[#0ACF83] py-3 rounded-xl items-center mb-4 w-20">
-                                <Text className="text-white font-semibold text-[16px]">Save</Text>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    setSuccessModal(true);
+                                    setTimeout(() => {
+                                        setSuccessModal(false);
+                                        navigation.goBack();
+                                    }, 1000);
+                                }}
+                                className="bg-[#0ACF83] py-3 rounded-xl items-center mb-4 w-20"
+                            >
+                                <Text className="text-white font-semibold text-[16px]">Simpan</Text>
                             </TouchableOpacity>
+
                             <TouchableOpacity
                                 onPress={() => setShowPopup(true)}
                                 className="bg-[#BF3131] py-3 rounded-xl items-center mb-4 w-20"
                             >
-                                <Text className="text-white font-semibold text-[16px]">Cancel</Text>
+                                <Text className="text-white font-semibold text-[16px]">Tutup</Text>
                             </TouchableOpacity>
-
-                            {/* <Popup visible={showPopup}
-                                onClose={() => setShowPopup(false)}
-                                onConfirm={() => {setShowPopup(false); navigation.navigate();}}
-                            /> */}
                         </View>
                     </View>
                 </View>
+                
+                <Modal
+                    animationType="fade"
+                    transparent={true}
+                    visible={showPopup}
+                    onRequestClose={() => setShowPopup(false)}
+                >
+                    <View className="flex-1 items-center justify-center bg-black/40">
+                        <View className="bg-white rounded-2xl px-6 py-8 w-[80%] shadow-lg">
+                            <Text className="text-center text-lg font-bold mb-4 text-gray-800">
+                                Keluar tanpa menyimpan?
+                            </Text>
+                            <Text className="text-center text-gray-500 mb-6">
+                                Apakah anda yakin ingin keluar tanpa menyimpan perubahan?
+                            </Text>
+                            <View className="flex-row justify-evenly space-x-4">
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        setShowPopup(false);
+                                        navigation.goBack();
+                                    }}
+                                    className="bg-[#BF3131] px-6 py-3 rounded-md"
+                                >
+                                    <Text className="text-white font-semibold">Iya</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={() => setShowPopup(false)}
+                                    className="bg-gray-200 px-6 py-3 rounded-md"
+                                >
+                                    <Text className="text-gray-700 font-semibold">Tidak</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
+                <Modal
+                    animationType="fade"
+                    transparent={true}
+                    visible={successModal}
+                    onRequestClose={() => setSuccessModal(false)}
+                >
+                    <View className="flex-1 items-center justify-center bg-black/40">
+                        <View className="bg-white rounded-2xl px-6 py-8 w-[75%] shadow-lg">
+                            <Text className="text-center text-lg font-bold mb-2 text-[#0ACF83]">
+                                Berhasil Menyimpan
+                            </Text>
+                            <Text className="text-center text-gray-600">Perubahan profil telah disimpan</Text>
+                        </View>
+                    </View>
+                </Modal>
 
             </SafeAreaView>
         </LinearGradient>
