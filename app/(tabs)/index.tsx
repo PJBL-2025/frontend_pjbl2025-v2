@@ -102,7 +102,7 @@ export default function Index() {
             showsHorizontalScrollIndicator={false}
             className="px-4"
           >
-            <View className="mb-4 flex-row items-center justify-start gap-4 mr-8">
+            <View className="mb-4 flex-row items-center justify-start gap-2 mr-8">
               {categoryIcon.map((item) => (
                 <CategoryButton
                   key={item.name}
@@ -128,7 +128,7 @@ export default function Index() {
             renderItem={({ item }) => <ProductCard data={item} />}
             numColumns={2}
             columnWrapperStyle={{
-              gap: 6,
+              justifyContent: "space-between",
             }}
             scrollEnabled={false}
           />

@@ -5,7 +5,7 @@ import { mockProduct, mockReviews } from "@/constant/dummy-data";
 import { formatDate, formatPrice } from "@/utils/formatter";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useRouter } from "expo-router";
-import { ChevronLeft, Palette } from "lucide-react-native";
+import { ChevronLeft } from "lucide-react-native";
 import React, { useState } from "react";
 import {
   FlatList,
@@ -75,24 +75,28 @@ const ProductDetail = () => {
         </View>
       </ScrollView>
 
-      <View className="flex-row p-4 bg-white border-t border-gray-200 items-center gap-2">
-        <TouchableOpacity
-          className="flex-1 bg-gray-200 rounded-xl py-3"
-          onPress={() => setModalCart(true)}
-        >
-          <Text className="text-center font-semibold">Tambah Keranjang</Text>
-        </TouchableOpacity>
+      <View className="p-4 bg-white border-t border-gray-200">
+  <View className="flex-row justify-center items-center gap-4">
+    <TouchableOpacity
+      className="w-[45%] bg-gray-200 rounded-xl py-3 items-center justify-center"
+      onPress={() =>
+        router.push({
+          pathname: '/design',
+          params: { isShortcut: "1", category: product.product_category }
+        })
+      }
+    >
+      <Text className="font-semibold">Custom Pakaian</Text>
+    </TouchableOpacity>
+    <TouchableOpacity
+      className="w-[45%] bg-blue-500 rounded-xl py-3 items-center justify-center"
+      onPress={() => setModalCart(true)}
+    >
+      <Text className="font-semibold text-white">Tambah Keranjang</Text>
+    </TouchableOpacity>
 
-        <TouchableOpacity className="flex-1 bg-blue-500 rounded-xl py-3">
-          <Text className="text-center text-white font-semibold">Beli Sekarang</Text>
-        </TouchableOpacity>
-        
-        <TouchableOpacity>
-          <View className="size-10 justify-center items-center border-2 rounded-xl">
-            <Palette />
-          </View>
-        </TouchableOpacity>
-      </View>
+  </View>
+</View>
 
       <ModalCart
         product={product}

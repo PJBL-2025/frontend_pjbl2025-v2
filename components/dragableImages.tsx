@@ -1,15 +1,13 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
   Image,
   StyleSheet,
-  View,
   TouchableWithoutFeedback,
 } from 'react-native';
 import Animated, {
   useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
-  withTiming,
   runOnJS,
 } from 'react-native-reanimated';
 import {
@@ -17,6 +15,7 @@ import {
   PinchGestureHandler,
   PanGestureHandlerGestureEvent,
   PinchGestureHandlerGestureEvent,
+  GestureHandlerRootView,
 } from 'react-native-gesture-handler';
 
 type CustomImage = {
@@ -65,6 +64,9 @@ export default function DraggableImage({
   const translateY = useSharedValue(img.position.y);
   const scale = useSharedValue(img.scale);
 
+  const panRef = useRef(null);
+  const pinchRef = useRef(null);
+
   const panGestureHandler = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent,
     PanContext
@@ -77,8 +79,12 @@ export default function DraggableImage({
       let newX = ctx.startX + event.translationX;
       let newY = ctx.startY + event.translationY;
 
-      newX = Math.min(Math.max(newX, 0), containerWidth - imageSize * scale.value);
-      newY = Math.min(Math.max(newY, 0), containerHeight - imageSize * scale.value);
+      const scaledSize = imageSize * scale.value;
+      const maxX = containerWidth - scaledSize;
+      const maxY = containerHeight - scaledSize;
+
+      newX = Math.min(Math.max(newX, 0), maxX > 0 ? maxX : 0);
+      newY = Math.min(Math.max(newY, 0), maxY > 0 ? maxY : 0);
 
       translateX.value = newX;
       translateY.value = newY;
@@ -97,59 +103,80 @@ export default function DraggableImage({
     },
     onActive: (event, ctx) => {
       let newScale = ctx.startScale * event.scale;
-      if (newScale < 0.5) newScale = 0.5;
-      if (newScale > 3) newScale = 3;
+      newScale = Math.max(0.5, Math.min(newScale, 3));
       scale.value = newScale;
+
+      // Optional: adjust position to keep within bounds during scale
+      const scaledSize = imageSize * newScale;
+      const maxX = containerWidth - scaledSize;
+      const maxY = containerHeight - scaledSize;
+
+      translateX.value = Math.min(Math.max(translateX.value, 0), maxX > 0 ? maxX : 0);
+      translateY.value = Math.min(Math.max(translateY.value, 0), maxY > 0 ? maxY : 0);
     },
     onEnd: () => {
       runOnJS(onScaleEnd)(img.id, scale.value);
     },
   });
 
-  const animatedStyle = useAnimatedStyle(() => ({
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: imageSize,
-    height: imageSize,
-    transform: [
-      { translateX: translateX.value },
-      { translateY: translateY.value },
-      { scale: scale.value },
-    ],
-    zIndex: img.zIndex,
-    borderWidth: isSelected ? 2 : 0,
-    borderColor: isSelected ? 'red' : 'transparent',
-    borderRadius:
+  const animatedStyle = useAnimatedStyle(() => {
+    const borderRadius =
       img.shape === 'circle'
         ? imageSize / 2
         : img.shape === 'none'
-        ? 16 // rounded-xl setara borderRadius 16
-        : 0,
-    overflow: 'hidden',
-  }));
+        ? 16
+        : 0;
+
+    return {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: imageSize,
+      height: imageSize,
+      transform: [
+        { translateX: translateX.value },
+        { translateY: translateY.value },
+        { scale: scale.value },
+      ],
+      zIndex: img.zIndex,
+      borderWidth: isSelected ? 2 : 0,
+      borderColor: isSelected ? 'red' : 'transparent',
+      borderRadius,
+      overflow: 'hidden',
+    };
+  });
+
+  const imageStyle = StyleSheet.create({
+    image: {
+      ...StyleSheet.absoluteFillObject,
+      width: '100%',
+      height: '100%',
+      borderRadius:
+        img.shape === 'circle'
+          ? imageSize / 2
+          : img.shape === 'none'
+          ? 16
+          : 0,
+    },
+  });
 
   return (
-    <PanGestureHandler onGestureEvent={panGestureHandler}>
+    <PanGestureHandler
+      ref={panRef}
+      simultaneousHandlers={pinchRef}
+      onGestureEvent={panGestureHandler}
+    >
       <Animated.View style={animatedStyle}>
-        <PinchGestureHandler onGestureEvent={pinchGestureHandler}>
+        <PinchGestureHandler
+          ref={pinchRef}
+          simultaneousHandlers={panRef}
+          onGestureEvent={pinchGestureHandler}
+        >
           <Animated.View style={{ flex: 1 }}>
             <TouchableWithoutFeedback onPress={onSelect}>
-              <Image
+              <AnimatedImage
                 source={{ uri: img.uri }}
-                style={[
-                  StyleSheet.absoluteFillObject,
-                  {
-                    width: '100%',
-                    height: '100%',
-                    borderRadius:
-                      img.shape === 'circle'
-                        ? imageSize / 2
-                        : img.shape === 'none'
-                        ? 16
-                        : 0,
-                  },
-                ]}
+                style={imageStyle.image}
                 resizeMode="contain"
               />
             </TouchableWithoutFeedback>

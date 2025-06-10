@@ -12,7 +12,7 @@ const CategoryButton = ({ icon, label }: categoryButtonProps) => {
 
   const handlePress = () => {
     if (label === 'Design') {
-      router.push('/design/design');
+      router.push('/design?isShortcut=0');
     } else {
       router.push({
         pathname: "/category/[slug]",

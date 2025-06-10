@@ -6,7 +6,7 @@ export const categoryIcon = [
   { icon: images.jaketIcon, name: "Jaket" },
   { icon: images.kaosPanjangIcon, name: "Kaos Panjang" },
   { icon: images.kaosPendekIcon, name: "Kaos Pendek" },
-  { icon: images.sweaterIcon, name: "Design"}
+  { icon: images.designIcon, name: "Design"}
 ];
 
 export const products = [
@@ -26,7 +26,7 @@ export const products = [
     product_images: "https://loremflickr.com/1379/307?lock=7188539613782750",
     star: 3,
     sold: 1,
-    product_category: ["Unbranded", "Handmade", "Frozen", "Jaket", "Kaos Pendek"],
+    product_category: ["Unbranded", "Handmade", "Frozen", "Kaos Pendek"],
   },
   {
     id: 3,
@@ -35,7 +35,7 @@ export const products = [
     product_images: "https://picsum.photos/seed/LWmm27c6ec/1212/630",
     star: 0,
     sold: 3,
-    product_category: ["Refined", "Frozen", "Handmade", "Kaos Panjang"],
+    product_category: ["Refined", "Frozen", "Handmade", "Kaos Pendek"],
   },
   {
     id: 4,
@@ -44,7 +44,7 @@ export const products = [
     product_images: "https://loremflickr.com/2898/3209?lock=8961959562327376",
     star: 2,
     sold: 1,
-    product_category: ["Practical", "Oriental", "Handmade", "Modern"],
+    product_category: ["Practical", "Oriental", "Handmade", "Modern", "Sweater"],
   },
   {
     id: 5,
@@ -53,7 +53,7 @@ export const products = [
     product_images: "https://loremflickr.com/1379/307?lock=7188539613782750",
     star: 3,
     sold: 1,
-    product_category: ["Unbranded", "Handmade", "Frozen"],
+    product_category: ["Unbranded", "Handmade", "Frozen", "Jaket"],
   },
   {
     id: 6,
@@ -62,7 +62,7 @@ export const products = [
     product_images: "https://picsum.photos/seed/LWmm27c6ec/1212/630",
     star: 0,
     sold: 3,
-    product_category: ["Refined", "Frozen", "Handmade"],
+    product_category: ["Refined", "Frozen", "Handmade", "Kaos Panjang"],
   },
   {
     id: 7,
@@ -71,7 +71,7 @@ export const products = [
     product_images: "https://loremflickr.com/2898/3209?lock=8961959562327376",
     star: 2,
     sold: 1,
-    product_category: ["Practical", "Oriental", "Handmade", "Modern"],
+    product_category: ["Practical", "Oriental", "Handmade", "Modern", "Sweater"],
   },
   {
     id: 8,
@@ -80,7 +80,7 @@ export const products = [
     product_images: "https://loremflickr.com/1379/307?lock=7188539613782750",
     star: 3,
     sold: 1,
-    product_category: ["Unbranded", "Handmade", "Frozen"],
+    product_category: ["Unbranded", "Handmade", "Frozen", "Kaos Pendek"],
   },
 ];
 
@@ -138,7 +138,7 @@ export const mockProduct: ProductDetail = {
   weight: 10,
   star: 4.7,
   sold: 911,
-  product_category: ["Modern", "Frozen", "Oriental"],
+  product_category: ["Jaket"],
   product_size: ["S", "M", "L", "XL"],
   review: mockReviews,
   created_at: "2025-05-16T04:33:22.168Z",

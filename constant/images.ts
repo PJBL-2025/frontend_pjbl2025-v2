@@ -12,6 +12,7 @@ import sweaterIcon from "@/assets/images/categoryIcon/sweater.png";
 import kaosPendekIcon from "@/assets/images/categoryIcon/kaos-pendek.png";
 import kaosPanjangIcon from "@/assets/images/categoryIcon/kaos-panjang.png";
 import categoryHeader from "@/assets/images/CategoryHeader.png";
+import designIcon from "@/assets/images/design.png";
 
 export const images = {
     logoIcon,
@@ -28,4 +29,5 @@ export const images = {
     kaosPendekIcon,
     kaosPanjangIcon,
     categoryHeader,
+    designIcon
 }

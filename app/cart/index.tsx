@@ -26,6 +26,8 @@ const CartPage = () => {
     );
   };
 
+  console.log(selectedCart)
+
   return (
     <>
       <View className="flex-row items-center mt-2 p-4">

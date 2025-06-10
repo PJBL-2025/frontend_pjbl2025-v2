@@ -9,16 +9,16 @@ export default function ProductCard({ data }: { data: Product }) {
 
   return (
     <TouchableOpacity
-      className="bg-white rounded-xl p-3 gap-3 border border-gray-300 mb-[6px]"
+      className="bg-white rounded-xl p-3 gap-3 border border-gray-300 w-[48%]"
       onPress={() => router.push(`/product/${data.id}`)}
     >
-      <View className="size-40 rounded-xl flex justify-center ">
+      <View className="aspect-square rounded-xl justify-center ">
         <Image
           src={data.product_images}
           className="w-full h-full object-cover"
         />
       </View>
-      <View className="gap-1 max-w-40">
+      <View className="gap-1">
         <Text className="text-sm font-medium text-black">{data.name}</Text>
         <Text className="text-sm font-bold text-black">
           {formatPrice(data.price)}

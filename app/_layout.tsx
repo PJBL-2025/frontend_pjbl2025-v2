@@ -16,6 +16,8 @@ export default function RootLayout() {
         <Stack.Screen name="cart" />
         <Stack.Screen name="category/[slug]" />
         <Stack.Screen name="profile"/>
+        <Stack.Screen name="design" />
+        <Stack.Screen name="design?isShortcut=1" />
       </Stack>
 
   );
