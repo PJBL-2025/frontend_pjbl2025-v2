@@ -1,8 +1,10 @@
+import { useRouter } from "expo-router";
 import { FileQuestion } from "lucide-react-native";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
 const NotFound = () => {
+  const router = useRouter()
   return (
     <View className="justify-center items-center py-20 gap-4">
       <FileQuestion color={"white"} size={60} />
@@ -14,7 +16,7 @@ const NotFound = () => {
           Mungkin ada kesalahan, coba cari kata kunci lain
         </Text>
       </View>
-      <TouchableOpacity className="bg-white py-2 px-4 rounded-sm">
+      <TouchableOpacity className="bg-white py-2 px-4 rounded-xl" onPress={() => router.push("/search")}>
         <Text>Cari kata kunci lain</Text>
       </TouchableOpacity>
     </View>

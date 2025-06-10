@@ -88,7 +88,7 @@ const ModalCart = ({
           <View className="flex-row gap-4 items-center">
             <View className="size-36">
               <Image
-                src={product.product_images}
+                src={product.product_images[0]}
                 className="w-full h-full object-cover"
               />
             </View>

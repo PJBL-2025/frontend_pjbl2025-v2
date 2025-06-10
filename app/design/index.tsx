@@ -67,7 +67,6 @@ export default function Design() {
   const [modelImage, setModelImage] = useState(require('@/assets/images/clothes/shirt_template.png'));
 
   const {isShortcut} = useLocalSearchParams();
-console.log('isShortcut:',Boolean(Number(isShortcut)));
 
   const models = [
     { label: 'Kaos Pendek', value: 'shirt_template' },
@@ -407,7 +406,7 @@ const pickImage = async () => {
                   <View className="bg-gray-200 p-3 rounded-md border-2 border-blue-500 items-center justify-center">
                     <View style={{ width: CONTAINER_WIDTH, height: CONTAINER_HEIGHT }}>
                       <Image
-                        source={modelImage}
+                        source={modelImage} 
                         className="absolute w-full h-full"
                         style={{ tintColor: color }}
                       />

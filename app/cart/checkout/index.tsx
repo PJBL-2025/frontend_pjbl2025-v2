@@ -32,12 +32,12 @@ const Checkout = () => {
     if (isCustom) {
       return selectedCart.reduce(
         (total, item) =>
-          total + item.price * item.product_quantity + 2000 + 10000,
+          total + item.price * (item?.quantity || 0) + 2000 + 10000,
         0
       );
     }
     return selectedCart.reduce(
-      (total, item) => total + item.price * item.product_quantity + 2000,
+      (total, item) => total + item.price * (item?.quantity || 0) + 2000,
       0
     );
   };

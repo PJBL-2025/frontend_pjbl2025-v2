@@ -1,3 +1,4 @@
+import { Review } from "@/interfaces/interfaces";
 import { formatDate } from "@/utils/formatter";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import React from "react";
@@ -18,7 +19,7 @@ const ReviewCard = ({ data }: { data: Review }) => {
     <View className="border-t border-gray-200 py-4 gap-3">
       <View className="flex-row gap-3 items-center">
         <View className="size-10 rounded-full overflow-hidden justify-center items-center bg-blue-400">
-          <Text className="text-white font-bold">A</Text>
+          <Text className="text-white font-bold">{data.user.name[0]}</Text>
         </View>
         <View className="flex-1">
           <Text className="font-semibold">{data.user.name}</Text>

@@ -21,7 +21,7 @@ const CartPage = () => {
 
   const calculateTotal = () => {
     return selectedCart.reduce(
-      (total, item) => total + item.price * item.product_quantity,
+      (total, item) => total + item.price * (item?.quantity || 0),
       0
     );
   };

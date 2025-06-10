@@ -49,8 +49,7 @@ const search = () => {
       saveHistory(updatedHistory);
     }
 
-    setQuery("");
-    router.push("/product");
+    router.replace(`/product?query=${query}`);
 
     console.log("Searching for:", query);
   };
@@ -91,7 +90,7 @@ const search = () => {
             renderItem={({ item }) => (
               <TouchableOpacity
                 className="bg-white rounded-lg p-4 flex-row justify-between items-center"
-                onPress={() => router.push("/product")}
+                onPress={() => router.replace(`/product?query=${item}`)}
               >
                 <TouchableOpacity onPress={() => handleSelectHistory(item)}>
                   <Text>{item}</Text>

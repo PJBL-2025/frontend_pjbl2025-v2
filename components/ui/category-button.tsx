@@ -16,7 +16,7 @@ const CategoryButton = ({ icon, label }: categoryButtonProps) => {
     } else {
       router.push({
         pathname: "/category/[slug]",
-        params: { slug: label.toLowerCase().replace(/\s/g, "-") },
+        params: { slug: label.toLowerCase().replace(" ", "%20") },
       });
     }
   };

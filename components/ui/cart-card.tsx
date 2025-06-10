@@ -31,7 +31,7 @@ const CartCard = ({
         className="flex-row items-center flex-1 gap-3"
         onPress={() => router.push(`/product/${item.product_id}`)}
       >
-        <Image src={item.product_images} className="w-20 h-20 rounded-lg" />
+        <Image src={item.product_images[0]} className="w-20 h-20 rounded-lg" />
         <View className="flex-1">
           <Text className="font-bold">{item.name}</Text>
           <Text className="text-gray-500">
